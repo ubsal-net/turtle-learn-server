@@ -1,3 +1,22 @@
 spring:
   application:
     name: turtle-learn-server
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/turtle_learn
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: turtle
+    password: "!Turtle4410"
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        hbm2ddl:
+          auto: create
+
+  jwt:
+    issuer: jeongmu1
+    secret-key: YWprbGdoc2Rma2xnanNkaGZnbGprc2RmZ2hsc2ss22FRsas56
+    access-token-expiration: 604_800_900
