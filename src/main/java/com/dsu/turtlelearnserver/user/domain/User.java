@@ -3,6 +3,8 @@ package com.dsu.turtlelearnserver.user.domain;
 import com.dsu.turtlelearnserver.common.global.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +23,11 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private int age;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Sex sex;
 }
