@@ -15,7 +15,6 @@ public class Selection extends BaseEntity {
     @JoinColumn(nullable = false)
     private Question question;
 
-
     @Column(nullable = false)
     private Boolean answer;
 
