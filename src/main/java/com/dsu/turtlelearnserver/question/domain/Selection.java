@@ -19,6 +19,6 @@ public class Selection extends BaseEntity {
     @Column(nullable = false)
     private Boolean answer;
 
-
-
+    @Column(nullable = false)
+    private String content;
 }
