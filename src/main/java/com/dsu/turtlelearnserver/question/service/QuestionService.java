@@ -11,6 +11,7 @@ import com.dsu.turtlelearnserver.question.repository.QuestionRepository;
 import com.dsu.turtlelearnserver.user.domain.User;
 import com.dsu.turtlelearnserver.user.repository.UserRepository;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -25,14 +26,17 @@ public class QuestionService {
     private final AnswerSubmissionRepository answerSubmissionRepository;
     private final UserRepository userRepository;
 
-    public QuestionResponse getQuestionsForUser(String username) {
+    public QuestionResponse getQuestionsForUser(Category category, String username) {
         User user = userRepository.findUserByUsername(username)
             .orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다 : " + username));
 
         Map<Question, Long> subMap = getAnswerSubmittedQuestionMap(user);
+        List<Question> questions = category != null ?
+            questionRepository.findAllByCategory(category) :
+            questionRepository.findAll();
 
         return new QuestionResponse(
-            questionRepository.findAll().stream()
+            questions.stream()
                 .map(question -> QuestionInfoForUser.of(question, subMap.containsKey(question)))
                 .toList()
         );
