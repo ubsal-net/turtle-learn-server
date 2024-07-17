@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Selection extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Question question;
 
@@ -20,4 +20,8 @@ public class Selection extends BaseEntity {
 
     @Column(nullable = false)
     private String content;
+
+    public long getQuestionId() {
+        return question.getId();
+    }
 }

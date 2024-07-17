@@ -21,4 +21,8 @@ public class AnswerSubmission extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Selection selection;
+
+    public Question getQuestion() {
+        return selection.getQuestion();
+    }
 }
