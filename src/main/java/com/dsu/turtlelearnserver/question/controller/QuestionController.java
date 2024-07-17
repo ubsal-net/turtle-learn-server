@@ -1,7 +1,9 @@
 package com.dsu.turtlelearnserver.question.controller;
 
 import com.dsu.turtlelearnserver.question.dto.response.CategoriesResponse;
+import com.dsu.turtlelearnserver.question.dto.response.QuestionResponse;
 import com.dsu.turtlelearnserver.question.service.QuestionService;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuestionController {
 
     private final QuestionService questionService;
+
+    @GetMapping
+    public ResponseEntity<QuestionResponse> getQuestions(Principal principal) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(questionService.getQuestionsForUser(principal.getName()));
+    }
 
     @GetMapping("categories")
     public ResponseEntity<CategoriesResponse> getCategories() {

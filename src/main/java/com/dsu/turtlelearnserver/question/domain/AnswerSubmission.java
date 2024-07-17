@@ -17,18 +17,14 @@ public class AnswerSubmission extends BaseEntity {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "question")
+    @JoinColumn(nullable = false)
     private Question question;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user")
+    @JoinColumn(nullable = false)
     private User user;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Selection selection;
-
-
 }
