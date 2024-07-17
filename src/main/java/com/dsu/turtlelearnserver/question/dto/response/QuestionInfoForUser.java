@@ -2,6 +2,7 @@ package com.dsu.turtlelearnserver.question.dto.response;
 
 import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.question.domain.Question;
+import java.util.List;
 import lombok.Builder;
 
 @Builder
@@ -10,7 +11,8 @@ public record QuestionInfoForUser(
     long number,
     String question,
     Category category,
-    boolean solved
+    boolean solved,
+    List<SelectionInfo> selections
 ) {
 
     public static QuestionInfoForUser of(Question question, boolean userSolved) {
@@ -20,6 +22,7 @@ public record QuestionInfoForUser(
             .question(question.getQuestion())
             .category(question.getCategory())
             .solved(userSolved)
+            .selections(question.getSelections().stream().map(SelectionInfo::from).toList())
             .build();
     }
 }
