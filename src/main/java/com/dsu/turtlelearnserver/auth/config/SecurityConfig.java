@@ -41,6 +41,7 @@ public class SecurityConfig {
             )
             .sessionManagement(e -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(registry -> registry
+                .requestMatchers("questions", "/questions/**").authenticated()
                 .requestMatchers("/", "/**", "/auths/**", "/users/**").permitAll()
             )
             .getOrBuild();

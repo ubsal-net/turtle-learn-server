@@ -7,6 +7,7 @@ import com.dsu.turtlelearnserver.global.exception.response.ErrorResponse;
 import com.dsu.turtlelearnserver.user.exception.DuplicatedUsernameException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -43,6 +44,13 @@ public class GlobalExceptionHandler {
         NoResourceFoundException e
     ) {
         var errorResponse = createErrorResponse(RESOURCE_NOT_FOUND, "해당 url은 존재하지 않습니다.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchElementException(
+        NoSuchElementException e) {
+        var errorResponse = createErrorResponse(RESOURCE_NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 

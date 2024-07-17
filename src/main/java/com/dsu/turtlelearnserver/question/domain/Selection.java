@@ -11,14 +11,17 @@ import lombok.*;
 @AllArgsConstructor
 public class Selection extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Question question;
-
 
     @Column(nullable = false)
     private Boolean answer;
 
+    @Column(nullable = false)
+    private String content;
 
-
+    public long getQuestionId() {
+        return question.getId();
+    }
 }
