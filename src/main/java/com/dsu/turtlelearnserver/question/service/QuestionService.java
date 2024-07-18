@@ -1,9 +1,9 @@
 package com.dsu.turtlelearnserver.question.service;
 
 import com.dsu.turtlelearnserver.question.domain.AnswerSubmission;
-import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.question.domain.Question;
 import com.dsu.turtlelearnserver.question.domain.Selection;
+import com.dsu.turtlelearnserver.question.repository.CategoryRepository;
 import com.dsu.turtlelearnserver.question.repository.SelectionRepository;
 import com.dsu.turtlelearnserver.question.dto.request.AnswerSubmissionForm;
 import com.dsu.turtlelearnserver.question.dto.response.AnswerSubmissionResponse;
@@ -15,8 +15,8 @@ import com.dsu.turtlelearnserver.question.repository.AnswerSubmissionRepository;
 import com.dsu.turtlelearnserver.question.repository.QuestionRepository;
 import com.dsu.turtlelearnserver.user.domain.User;
 import com.dsu.turtlelearnserver.user.repository.UserRepository;
-import java.util.Arrays;
 import java.util.List;
+import com.dsu.turtlelearnserver.question.domain.Category;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -32,10 +32,14 @@ public class QuestionService {
     private final AnswerSubmissionRepository answerSubmissionRepository;
     private final UserRepository userRepository;
     private final SelectionRepository selectionRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public QuestionResponse getQuestionsForUser(Category category, String username) {
+    public QuestionResponse getQuestionsForUser(Long categoryId, String username) {
         User user = findUser(username);
+
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new NoSuchElementException("해당 카테고리를 조회할 수 없습니다 : " + categoryId));
 
         Map<Question, Long> subMap = getAnswerSubmittedQuestionMap(user);
         List<Question> questions = category != null ?
@@ -77,7 +81,7 @@ public class QuestionService {
 
     public CategoriesResponse getCategoryList() {
         return new CategoriesResponse(
-            Arrays.stream(Category.values()).map(Category::name).toList()
+            categoryRepository.findAll().stream().map(Category::getName).toList()
         );
     }
 

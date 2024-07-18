@@ -1,6 +1,5 @@
 package com.dsu.turtlelearnserver.question.controller;
 
-import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.question.dto.request.AnswerSubmissionForm;
 import com.dsu.turtlelearnserver.question.dto.response.AnswerSubmissionResponse;
 import com.dsu.turtlelearnserver.question.dto.response.CategoriesResponse;
@@ -28,11 +27,11 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity<QuestionResponse> getQuestions(
-        @RequestParam(required = false) Category category,
+        @RequestParam(required = false) Long categoryId,
         Principal principal
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(questionService.getQuestionsForUser(category, principal.getName()));
+            .body(questionService.getQuestionsForUser(categoryId, principal.getName()));
     }
 
     @GetMapping("{questionId}")
