@@ -22,4 +22,15 @@ public record RandomQuestionInfo(
             selections.stream().map(RandomQuestionSelectionInfo::from).toList()
         );
     }
+
+    public static RandomQuestionInfo from(RandomQuestion randomQuestion) {
+        return new RandomQuestionInfo(
+            randomQuestion.getId(),
+            randomQuestion.getQuestion(),
+            randomQuestion.getCategoryName(),
+            randomQuestion.getRandomQuestionSelections().stream()
+                .map(RandomQuestionSelectionInfo::from)
+                .toList()
+        );
+    }
 }
