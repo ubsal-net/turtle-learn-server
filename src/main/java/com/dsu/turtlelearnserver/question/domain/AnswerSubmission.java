@@ -25,4 +25,8 @@ public class AnswerSubmission extends BaseEntity {
     public Question getQuestion() {
         return selection.getQuestion();
     }
+
+    public boolean isAnswer() {
+        return selection.getAnswer();
+    }
 }

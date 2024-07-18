@@ -2,11 +2,14 @@ package com.dsu.turtlelearnserver.user.controller;
 
 import com.dsu.turtlelearnserver.user.dto.request.RegistrationForm;
 import com.dsu.turtlelearnserver.user.dto.response.RegistrationResponse;
+import com.dsu.turtlelearnserver.user.dto.response.UserInfo;
 import com.dsu.turtlelearnserver.user.service.UserService;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +27,11 @@ public class UserController {
         @Valid @RequestBody RegistrationForm request
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<UserInfo> getUserInfo(Principal principal) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(userService.getUserInfo(principal.getName()));
     }
 }
