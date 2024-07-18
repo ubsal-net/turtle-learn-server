@@ -14,6 +14,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class AnswerSubmission extends BaseEntity {
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private User user;
@@ -28,5 +29,9 @@ public class AnswerSubmission extends BaseEntity {
 
     public boolean isAnswer() {
         return selection.getAnswer();
+    }
+
+    public long getQuestionId() {
+        return getQuestion().getId();
     }
 }

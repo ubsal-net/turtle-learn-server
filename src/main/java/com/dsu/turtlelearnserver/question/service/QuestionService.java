@@ -39,19 +39,16 @@ public class QuestionService {
     public QuestionResponse getQuestionsForUser(Long categoryId, String username) {
         User user = findUser(username);
 
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new NoSuchElementException("해당 카테고리를 조회할 수 없습니다 : " + categoryId));
+        Category category = getCategoryById(categoryId);
 
         Map<Question, Long> subMap = getAnswerSubmittedQuestionMap(user);
-        List<Question> questions = category != null ?
-            questionRepository.findAllByCategory(category) :
-            questionRepository.findAll();
+        List<Question> questions = getQuestionsByCategory(category);
 
-        return new QuestionResponse(
-            questions.stream()
-                .map(question -> QuestionInfoForUser.of(question, subMap.containsKey(question)))
-                .toList()
-        );
+        List<QuestionInfoForUser> questionInfoList = questions.stream()
+            .map(question -> QuestionInfoForUser.of(question, subMap.containsKey(question)))
+            .toList();
+
+        return new QuestionResponse(questionInfoList);
     }
 
     @Transactional(readOnly = true)
@@ -95,7 +92,22 @@ public class QuestionService {
         return answerSubmissionRepository.findByUser(user)
             .stream().collect(Collectors.toMap(
                 AnswerSubmission::getQuestion,
-                submission -> submission.getQuestion().getId()
+                AnswerSubmission::getQuestionId
             ));
+    }
+
+    private Category getCategoryById(Long categoryId) {
+        if (categoryId == null) {
+            return null;
+        }
+        return categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new NoSuchElementException("해당 카테고리를 조회할 수 없습니다 : " + categoryId));
+    }
+
+    private List<Question> getQuestionsByCategory(Category category) {
+        if (category == null) {
+            return questionRepository.findAll();
+        }
+        return questionRepository.findAllByCategory(category);
     }
 }
