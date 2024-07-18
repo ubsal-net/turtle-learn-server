@@ -1,7 +1,6 @@
 package com.dsu.turtlelearnserver.randomquestion.domain;
 
 import com.dsu.turtlelearnserver.common.global.BaseEntity;
-import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,11 +28,6 @@ public class RandomQuestion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     @ToString.Exclude
-    private Category category;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    @ToString.Exclude
     private User user;
 
     @Column(nullable = false)
@@ -42,8 +36,4 @@ public class RandomQuestion extends BaseEntity {
     @OneToMany(mappedBy = "randomQuestion")
     @ToString.Exclude
     private List<RandomQuestionSelection> randomQuestionSelections = new ArrayList<>();
-
-    public String getCategoryName() {
-        return category.getName();
-    }
 }

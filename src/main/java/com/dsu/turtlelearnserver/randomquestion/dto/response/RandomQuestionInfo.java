@@ -7,7 +7,6 @@ import java.util.List;
 public record RandomQuestionInfo(
     long id,
     String question,
-    String category,
     List<RandomQuestionSelectionInfo> selections
 ) {
 
@@ -18,7 +17,6 @@ public record RandomQuestionInfo(
         return new RandomQuestionInfo(
             randomQuestion.getId(),
             randomQuestion.getQuestion(),
-            randomQuestion.getCategoryName(),
             selections.stream().map(RandomQuestionSelectionInfo::from).toList()
         );
     }
@@ -27,7 +25,6 @@ public record RandomQuestionInfo(
         return new RandomQuestionInfo(
             randomQuestion.getId(),
             randomQuestion.getQuestion(),
-            randomQuestion.getCategoryName(),
             randomQuestion.getRandomQuestionSelections().stream()
                 .map(RandomQuestionSelectionInfo::from)
                 .toList()
