@@ -1,10 +1,12 @@
 package com.dsu.turtlelearnserver.randomquestion.service;
 
+import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.randomquestion.domain.RandomQuestion;
 import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionForm;
 import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionSelectionForm;
 import com.dsu.turtlelearnserver.randomquestion.dto.response.RandomQuestionInfo;
 import com.dsu.turtlelearnserver.randomquestion.exception.IllegalQuestionAccessException;
+import com.dsu.turtlelearnserver.question.repository.CategoryRepository;
 import com.dsu.turtlelearnserver.randomquestion.repository.RandomQuestionRepository;
 import com.dsu.turtlelearnserver.randomquestion.repository.RandomQuestionSelectionRepository;
 import com.dsu.turtlelearnserver.user.domain.User;
@@ -22,6 +24,7 @@ public class RandomQuestionService {
     private final RandomQuestionRepository randomQuestionRepository;
     private final RandomQuestionSelectionRepository randomQuestionSelectionRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public List<RandomQuestionInfo> getRandomQuestions(String username) {
@@ -47,9 +50,12 @@ public class RandomQuestionService {
     @Transactional
     public RandomQuestionInfo addRandomQuestion(RandomQuestionForm form, String username) {
         User user = findUser(username);
+        Category category = categoryRepository.findById(form.categoryId())
+            .orElseThrow(() ->
+                new NoSuchElementException("해당 카테고리를 찾을 수 없습니다 : " + form.categoryId()));
 
         validateSelectionForms(form.selections());
-        RandomQuestion question = randomQuestionRepository.save(form.toEntity(user));
+        RandomQuestion question = randomQuestionRepository.save(form.toEntity(user, category));
 
         return RandomQuestionInfo.of(question, randomQuestionSelectionRepository.saveAll(
             form.selections().stream()
