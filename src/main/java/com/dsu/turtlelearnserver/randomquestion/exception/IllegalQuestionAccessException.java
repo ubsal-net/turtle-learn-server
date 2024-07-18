@@ -1,4 +1,4 @@
-package com.dsu.turtlelearnserver.question.exception;
+package com.dsu.turtlelearnserver.randomquestion.exception;
 
 public class IllegalQuestionAccessException extends RuntimeException{
 

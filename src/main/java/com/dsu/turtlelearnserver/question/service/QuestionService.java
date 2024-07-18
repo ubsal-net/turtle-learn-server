@@ -41,7 +41,7 @@ public class QuestionService {
 
         Category category = getCategoryById(categoryId);
 
-        Map<Question, Long> subMap = getAnswerSubmittedQuestionMap(user);
+        var subMap = getAnswerSubmittedQuestionMap(user);
         List<Question> questions = getQuestionsByCategory(category);
 
         List<QuestionInfoForUser> questionInfoList = questions.stream()
@@ -88,11 +88,10 @@ public class QuestionService {
             .orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다 : " + username));
     }
 
-    private Map<Question, Long> getAnswerSubmittedQuestionMap(User user) {
+    private Map<Question, List<AnswerSubmission>> getAnswerSubmittedQuestionMap(User user) {
         return answerSubmissionRepository.findByUser(user)
-            .stream().collect(Collectors.toMap(
-                AnswerSubmission::getQuestion,
-                AnswerSubmission::getQuestionId
+            .stream().collect(Collectors.groupingBy(
+                AnswerSubmission::getQuestion
             ));
     }
 

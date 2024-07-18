@@ -1,6 +1,7 @@
-package com.dsu.turtlelearnserver.question.domain;
+package com.dsu.turtlelearnserver.randomquestion.domain;
 
 import com.dsu.turtlelearnserver.common.global.BaseEntity;
+import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

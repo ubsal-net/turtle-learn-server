@@ -4,7 +4,7 @@ import static com.dsu.turtlelearnserver.global.exception.error_code.CommonErrorC
 
 import com.dsu.turtlelearnserver.global.exception.error_code.CommonErrorCode;
 import com.dsu.turtlelearnserver.global.exception.response.ErrorResponse;
-import com.dsu.turtlelearnserver.question.exception.IllegalQuestionAccessException;
+import com.dsu.turtlelearnserver.randomquestion.exception.IllegalQuestionAccessException;
 import com.dsu.turtlelearnserver.user.exception.DuplicatedUsernameException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoResourceFoundException(
-        NoResourceFoundException e
-    ) {
+    public ResponseEntity<ErrorResponse> handleNoResourceFoundException() {
         var errorResponse = createErrorResponse(RESOURCE_NOT_FOUND, "해당 url은 존재하지 않습니다.");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
@@ -61,6 +59,14 @@ public class GlobalExceptionHandler {
     ) {
         var errorResponse = createErrorResponse(FORBIDDEN, e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleMultipleSelectionException(
+        IllegalArgumentException e
+    ) {
+        var errorResponse = createErrorResponse(INVALID_PARAMETER, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
     private ErrorResponse createErrorResponse(CommonErrorCode errorCode,
