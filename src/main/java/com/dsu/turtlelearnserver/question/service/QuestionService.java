@@ -95,7 +95,7 @@ public class QuestionService {
         return answerSubmissionRepository.findByUser(user)
             .stream().collect(Collectors.toMap(
                 AnswerSubmission::getQuestion,
-                submission -> submission.getQuestion().getId()
+                AnswerSubmission::getQuestionId
             ));
     }
 }
