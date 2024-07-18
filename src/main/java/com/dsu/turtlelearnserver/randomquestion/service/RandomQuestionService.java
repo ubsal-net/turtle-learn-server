@@ -3,6 +3,7 @@ package com.dsu.turtlelearnserver.randomquestion.service;
 import com.dsu.turtlelearnserver.question.domain.Category;
 import com.dsu.turtlelearnserver.randomquestion.domain.RandomQuestion;
 import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionForm;
+import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionSelectionForm;
 import com.dsu.turtlelearnserver.randomquestion.dto.response.RandomQuestionInfo;
 import com.dsu.turtlelearnserver.randomquestion.exception.IllegalQuestionAccessException;
 import com.dsu.turtlelearnserver.question.repository.CategoryRepository;
@@ -53,6 +54,7 @@ public class RandomQuestionService {
             .orElseThrow(() ->
                 new NoSuchElementException("해당 카테고리를 찾을 수 없습니다 : " + form.categoryId()));
 
+        validateSelectionForms(form.selections());
         RandomQuestion question = randomQuestionRepository.save(form.toEntity(user, category));
 
         return RandomQuestionInfo.of(question, randomQuestionSelectionRepository.saveAll(
@@ -65,5 +67,37 @@ public class RandomQuestionService {
     private User findUser(String username) {
         return userRepository.findUserByUsername(username)
             .orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다 : " + username));
+    }
+
+    private void validateSelectionForms(List<RandomQuestionSelectionForm> selectionForms) {
+        long selectedCount = selectionForms.stream()
+            .filter(RandomQuestionSelectionForm::selected)
+            .count();
+        long answerCount = selectionForms.stream()
+            .filter(RandomQuestionSelectionForm::answer)
+            .count();
+
+        validateFromMultiple(selectedCount, answerCount);
+        validateFromNone(selectedCount, answerCount);
+    }
+
+    private void validateFromMultiple(long sCount, long aCount) {
+        if (sCount > 1) {
+            throw new IllegalArgumentException("selected가 여러개 존재할 수 없습니다.");
+        }
+
+        if (aCount > 1) {
+            throw new IllegalArgumentException("answer가 여러개 존재할 수 없습니다.");
+        }
+    }
+
+    private void validateFromNone(long sCount, long aCount) {
+        if (sCount < 1) {
+            throw new IllegalArgumentException("selected가 존재하지 않습니다.");
+        }
+
+        if (aCount < 1) {
+            throw new IllegalArgumentException("answer가 존재하지 않습니다.");
+        }
     }
 }

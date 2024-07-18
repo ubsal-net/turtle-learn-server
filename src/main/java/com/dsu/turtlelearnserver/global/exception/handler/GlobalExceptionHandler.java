@@ -63,6 +63,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleMultipleSelectionException(
+        IllegalArgumentException e
+    ) {
+        var errorResponse = createErrorResponse(INVALID_PARAMETER, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
     private ErrorResponse createErrorResponse(CommonErrorCode errorCode,
         String explain) {
         return ErrorResponse.of(errorCode, explain);
