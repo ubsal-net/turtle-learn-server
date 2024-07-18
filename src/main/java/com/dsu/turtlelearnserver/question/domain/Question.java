@@ -2,9 +2,9 @@ package com.dsu.turtlelearnserver.question.domain;
 
 import com.dsu.turtlelearnserver.common.global.BaseEntity;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Getter
@@ -14,15 +14,20 @@ import java.util.Set;
 public class Question extends BaseEntity {
 
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private Long number;
 
     @Column(nullable = false)
     private String question;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private Category category;
 
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private List<Selection> selections = new ArrayList<>();
 
+    public String getCategoryName() {
+        return category.getName();
+    }
 }
