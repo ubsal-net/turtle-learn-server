@@ -1,8 +1,8 @@
-package com.dsu.turtlelearnserver.question.controller;
+package com.dsu.turtlelearnserver.randomquestion.controller;
 
-import com.dsu.turtlelearnserver.question.dto.request.RandomQuestionForm;
-import com.dsu.turtlelearnserver.question.dto.response.RandomQuestionInfo;
-import com.dsu.turtlelearnserver.question.service.RandomQuestionService;
+import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionForm;
+import com.dsu.turtlelearnserver.randomquestion.dto.response.RandomQuestionInfo;
+import com.dsu.turtlelearnserver.randomquestion.service.RandomQuestionService;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.util.List;

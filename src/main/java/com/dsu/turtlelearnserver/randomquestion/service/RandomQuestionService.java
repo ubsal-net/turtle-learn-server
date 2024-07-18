@@ -1,13 +1,13 @@
-package com.dsu.turtlelearnserver.question.service;
+package com.dsu.turtlelearnserver.randomquestion.service;
 
 import com.dsu.turtlelearnserver.question.domain.Category;
-import com.dsu.turtlelearnserver.question.domain.RandomQuestion;
-import com.dsu.turtlelearnserver.question.dto.request.RandomQuestionForm;
-import com.dsu.turtlelearnserver.question.dto.response.RandomQuestionInfo;
-import com.dsu.turtlelearnserver.question.exception.IllegalQuestionAccessException;
+import com.dsu.turtlelearnserver.randomquestion.domain.RandomQuestion;
+import com.dsu.turtlelearnserver.randomquestion.dto.request.RandomQuestionForm;
+import com.dsu.turtlelearnserver.randomquestion.dto.response.RandomQuestionInfo;
+import com.dsu.turtlelearnserver.randomquestion.exception.IllegalQuestionAccessException;
 import com.dsu.turtlelearnserver.question.repository.CategoryRepository;
-import com.dsu.turtlelearnserver.question.repository.RandomQuestionRepository;
-import com.dsu.turtlelearnserver.question.repository.RandomQuestionSelectionRepository;
+import com.dsu.turtlelearnserver.randomquestion.repository.RandomQuestionRepository;
+import com.dsu.turtlelearnserver.randomquestion.repository.RandomQuestionSelectionRepository;
 import com.dsu.turtlelearnserver.user.domain.User;
 import com.dsu.turtlelearnserver.user.repository.UserRepository;
 import java.util.List;

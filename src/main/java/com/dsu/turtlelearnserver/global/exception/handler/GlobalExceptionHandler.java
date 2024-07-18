@@ -4,7 +4,7 @@ import static com.dsu.turtlelearnserver.global.exception.error_code.CommonErrorC
 
 import com.dsu.turtlelearnserver.global.exception.error_code.CommonErrorCode;
 import com.dsu.turtlelearnserver.global.exception.response.ErrorResponse;
-import com.dsu.turtlelearnserver.question.exception.IllegalQuestionAccessException;
+import com.dsu.turtlelearnserver.randomquestion.exception.IllegalQuestionAccessException;
 import com.dsu.turtlelearnserver.user.exception.DuplicatedUsernameException;
 import java.util.HashMap;
 import java.util.Map;

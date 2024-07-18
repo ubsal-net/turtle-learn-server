@@ -1,7 +1,7 @@
-package com.dsu.turtlelearnserver.question.dto.request;
+package com.dsu.turtlelearnserver.randomquestion.dto.request;
 
 import com.dsu.turtlelearnserver.question.domain.Category;
-import com.dsu.turtlelearnserver.question.domain.RandomQuestion;
+import com.dsu.turtlelearnserver.randomquestion.domain.RandomQuestion;
 import com.dsu.turtlelearnserver.user.domain.User;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

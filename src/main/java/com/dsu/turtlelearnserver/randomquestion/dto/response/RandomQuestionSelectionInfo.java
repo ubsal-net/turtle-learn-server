@@ -1,7 +1,7 @@
-package com.dsu.turtlelearnserver.question.dto.response;
+package com.dsu.turtlelearnserver.randomquestion.dto.response;
 
 
-import com.dsu.turtlelearnserver.question.domain.RandomQuestionSelection;
+import com.dsu.turtlelearnserver.randomquestion.domain.RandomQuestionSelection;
 
 public record RandomQuestionSelectionInfo(
     boolean answer,
