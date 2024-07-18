@@ -3,6 +3,7 @@ package com.dsu.turtlelearnserver.question.service;
 import com.dsu.turtlelearnserver.question.domain.AnswerSubmission;
 import com.dsu.turtlelearnserver.question.domain.Question;
 import com.dsu.turtlelearnserver.question.domain.Selection;
+import com.dsu.turtlelearnserver.question.dto.response.CategoryInfo;
 import com.dsu.turtlelearnserver.question.repository.CategoryRepository;
 import com.dsu.turtlelearnserver.question.repository.SelectionRepository;
 import com.dsu.turtlelearnserver.question.dto.request.AnswerSubmissionForm;
@@ -81,7 +82,7 @@ public class QuestionService {
 
     public CategoriesResponse getCategoryList() {
         return new CategoriesResponse(
-            categoryRepository.findAll().stream().map(Category::getName).toList()
+            categoryRepository.findAll().stream().map(CategoryInfo::from).toList()
         );
     }
 
