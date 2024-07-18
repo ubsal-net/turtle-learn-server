@@ -15,6 +15,8 @@ public record RegistrationForm(
     @Pattern(message = "최소 한개 이상의 대소문자와 숫자, 특수문자를 포함한 8자 이상 16자 이하의 비밀번호를 입력해야 합니다.",
         regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!~$%^=()])(?=\\S+$).{8,16}$")
     String password,
+    @NotBlank(message = "공백 이름은 허용되지 않습니다.")
+    String name,
     @Min(value = 1, message = "최소 1 이상의 숫자를 입력해주세요.")
     int age,
     Sex sex
@@ -24,6 +26,7 @@ public record RegistrationForm(
         return User.builder()
             .username(username)
             .password(passwordEncoder.encode(password))
+            .name(name)
             .age(age)
             .sex(sex)
             .build();
