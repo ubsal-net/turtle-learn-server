@@ -70,32 +70,17 @@ public class RandomQuestionService {
     }
 
     private void validateSelectionForms(List<RandomQuestionSelectionForm> selectionForms) {
-        long selectedCount = selectionForms.stream()
-            .filter(RandomQuestionSelectionForm::selected)
-            .count();
         long answerCount = selectionForms.stream()
             .filter(RandomQuestionSelectionForm::answer)
             .count();
 
-        validateFromMultiple(selectedCount, answerCount);
-        validateFromNone(selectedCount, answerCount);
+        validateAnswerCount(answerCount);
     }
 
-    private void validateFromMultiple(long sCount, long aCount) {
-        if (sCount > 1) {
-            throw new IllegalArgumentException("selected가 여러개 존재할 수 없습니다.");
-        }
-
+    private void validateAnswerCount(long aCount) {
         if (aCount > 1) {
             throw new IllegalArgumentException("answer가 여러개 존재할 수 없습니다.");
         }
-    }
-
-    private void validateFromNone(long sCount, long aCount) {
-        if (sCount < 1) {
-            throw new IllegalArgumentException("selected가 존재하지 않습니다.");
-        }
-
         if (aCount < 1) {
             throw new IllegalArgumentException("answer가 존재하지 않습니다.");
         }

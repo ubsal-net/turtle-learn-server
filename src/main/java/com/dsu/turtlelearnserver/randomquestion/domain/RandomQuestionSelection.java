@@ -25,9 +25,6 @@ public class RandomQuestionSelection extends BaseEntity {
     private boolean answer;
 
     @Column(nullable = false)
-    private boolean userSelected;
-
-    @Column(nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
