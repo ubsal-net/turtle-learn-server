@@ -41,9 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoResourceFoundException(
-        NoResourceFoundException e
-    ) {
+    public ResponseEntity<ErrorResponse> handleNoResourceFoundException() {
         var errorResponse = createErrorResponse(RESOURCE_NOT_FOUND, "해당 url은 존재하지 않습니다.");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
